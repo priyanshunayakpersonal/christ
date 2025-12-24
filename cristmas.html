@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Delivery For You</title>
+    <style>
+        /* --- CSS STYLING --- */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at bottom, #0f2027, #203a43, #2c5364); /* Deep Night Sky */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Falling Snow Animation --- */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            opacity: 0.8;
+            font-size: 1em;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+
+        /* --- Flying Santa Animation --- */
+        .santa-container {
+            position: absolute;
+            top: 15%;
+            left: -20%;
+            font-size: 3rem;
+            z-index: 2;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+            animation: flyAcross 12s linear infinite;
+        }
+
+        @keyframes flyAcross {
+            0% { left: -20%; transform: rotate(5deg); }
+            100% { left: 120%; transform: rotate(-5deg); }
+        }
+
+        /* --- The Interaction Container --- */
+        .scene-container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* --- Christmas Lights Glow --- */
+        .glow-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff, 
+                0 0 10px #fff, 
+                0 0 20px #ff00de, 
+                0 0 30px #ff00de, 
+                0 0 40px #ff00de;
+            margin-bottom: 30px;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #ff00de; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff00de, 0 0 40px #ff00de; }
+        }
+
+        /* --- The Gift Box --- */
+        .gift-box-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box-container:hover {
+            transform: scale(1.05);
+        }
+
+        .box-body {
+            width: 100%;
+            height: 80%;
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            position: absolute;
+            bottom: 0;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .box-lid {
+            width: 110%;
+            height: 25%;
+            background: #e53935;
+            position: absolute;
+            top: 0;
+            left: -5%;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2;
+            transition: all 1s ease;
+        }
+
+        .ribbon-vertical {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 100%;
+            background: #ffeb3b;
+            box-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+        }
+
+        .ribbon-horizontal {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 25px;
+            background: #ffeb3b;
+            box-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+        }
+
+        .click-hint {
+            margin-top: 20px;
+            color: #ddd;
+            font-size: 0.9rem;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* --- The Hidden Letter --- */
+        .letter-card {
+            display: none; /* Hidden initially */
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
+            text-align: center;
+            animation: zoomIn 0.8s ease forwards;
+            position: relative;
+        }
+
+        .letter-text {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .heart-icon {
+            font-size: 3rem;
+            color: #e91e63;
+            margin-top: 15px;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- JavaScript Interaction Classes --- */
+        .lid-open {
+            transform: translateY(-80px) rotate(-10deg);
+            opacity: 0;
+        }
+        
+        .box-vanish {
+            transform: scale(0);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Santa flying across -->
+    <div class="santa-container">🎅 🦌💨</div>
+
+    <div class="scene-container">
+        <!-- Title -->
+        <div id="mainTitle" class="glow-title">Merry Christmas, My Love</div>
+
+        <!-- The Gift Box -->
+        <div class="gift-box-container" id="giftBox" onclick="openGift()">
+            <div class="box-lid" id="lid">
+                <div class="ribbon-vertical"></div>
+            </div>
+            <div class="box-body">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+            </div>
+        </div>
+
+        <p class="click-hint" id="hint">Tap the gift to unwrap 🎁</p>
+
+        <!-- The Message (Revealed on Click) -->
+        <div class="letter-card" id="letter">
+            <h2 style="font-family: 'Dancing Script'; color: #d32f2f; margin-top: 0;">My Heart is With You</h2>
+            <p class="letter-text">
+                Even though there are miles between us tonight, looking at the same stars makes me feel closer to you.
+                <br><br>
+                This gift card is virtual, but my love for you is the most real thing in my life. You are my Christmas miracle, today and every day.
+                <br><br>
+                I promise you endless love, laughter, and warmth in the coming year.
+                <br><br>
+                I also promise ki main life time tuma sath dunga ❤️
+                <strong>I love you.</strong>
+            </p>
+            <div class="heart-icon">❤️</div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SNOWFALL EFFECT ---
+        function createSnow() {
+            const container = document.body;
+            const snowflake = document.createElement('div');
+            snowflake.innerHTML = '❄';
+            snowflake.classList.add('snowflake');
+            
+            // Randomize position and animation properties
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            
+            container.appendChild(snowflake);
+
+            // Remove snowflake after animation ends to keep browser light
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        // Generate snow every 100ms
+        setInterval(createSnow, 100);
+
+        // --- 2. GIFT OPENING LOGIC ---
+        function openGift() {
+            const lid = document.getElementById('lid');
+            const giftBox = document.getElementById('giftBox');
+            const letter = document.getElementById('letter');
+            const hint = document.getElementById('hint');
+            const title = document.getElementById('mainTitle');
+
+            // 1. Animate Lid
+            lid.classList.add('lid-open');
+            
+            // 2. Hide Hint
+            hint.style.display = 'none';
+
+            // 3. After a short delay, hide box and show letter
+            setTimeout(() => {
+                giftBox.classList.add('box-vanish');
+                title.style.display = 'none'; // Optional: Hide title to focus on letter
+                
+                setTimeout(() => {
+                    giftBox.style.display = 'none';
+                    letter.style.display = 'block';
+                }, 400); // Wait for box to vanish
+            }, 500); // Wait for lid to fly off
+        }
+    </script>
+</body>
+</html>
